@@ -249,6 +249,10 @@ class MammotionMowerDevice extends Homey.Device {
       10: 'idle',      // docked idle
       11: 'charging',  // docked charging
       12: 'idle',      // docked fully charged
+      13: 'mowing',    // mowing
+      14: 'paused',    // paused by obstacle
+      15: 'returning', // returning to dock
+      16: 'error',     // stuck
     };
 
     const stateRaw = val(props.deviceState) ?? val(props.device_state);
@@ -277,6 +281,7 @@ class MammotionMowerDevice extends Homey.Device {
       4: 'Error', 5: 'Returning to dock', 6: 'Upgrading firmware',
       7: 'Standby', 8: 'Area training', 9: 'Recording border',
       10: 'Docked (idle)', 11: 'Docked (charging)', 12: 'Docked (fully charged)',
+      13: 'Mowing', 14: 'Paused (obstacle)', 15: 'Returning to dock', 16: 'Stuck',
     };
     if (deviceStateNum !== undefined) {
       const activity = activityMap[Number(deviceStateNum)] || `State ${deviceStateNum}`;
