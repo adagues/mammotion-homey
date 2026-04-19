@@ -15,6 +15,15 @@ class MammotionMowerDevice extends Homey.Device {
     this.mqtt = null;
     this._pollInterval = null;
 
+    // Dynamically add new capabilities if not present (for devices paired before update)
+    const requiredCaps = ['button_start', 'button_pause', 'button_stop', 'button_dock'];
+    for (const cap of requiredCaps) {
+      if (!this.hasCapability(cap)) {
+        this.log(`Adding missing capability: ${cap}`);
+        await this.addCapability(cap).catch(err => this.error(`Failed to add ${cap}:`, err));
+      }
+    }
+
     // Restore credentials and login
     const email = this.getStoreValue('email');
     const password = this.getStoreValue('password');
