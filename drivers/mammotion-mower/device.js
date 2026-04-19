@@ -124,7 +124,7 @@ class MammotionMowerDevice extends Homey.Device {
         productKey: aep.data.productKey,
         deviceName: aep.data.deviceName,
         deviceSecret: aep.data.deviceSecret,
-        regionId: (region && region.shortRegionId) || 'eu',
+        regionId: (region && region.regionId) || (region && region.shortRegionId) || 'eu-central-1',
         iotToken: this.api.iotToken || '',
         clientIdBase: this.api._clientId || 'homey_client',
       });
