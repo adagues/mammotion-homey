@@ -291,22 +291,14 @@ class MammotionMowerDevice extends Homey.Device {
     const data = this.getData();
     const cmd = commandBuilder();
 
-    // Try MQTT Direct publish first
+    // Try MQTT Direct publish
     if (this.mqttDirect && this.mqttDirect.isConnected && data.productKey && data.deviceName) {
-      try {
-        // Try JSON envelope first
-        await this.mqttDirect.sendCommand(data.productKey, data.deviceName, cmd);
-        // Also try raw protobuf
-        await this.mqttDirect.sendRawCommand(data.productKey, data.deviceName, cmd);
-        return;
-      } catch (err) {
-        this.log('MQTT Direct command failed:', err.message, '- trying HTTP...');
-      }
+      await this.mqttDirect.sendCommand(data.productKey, data.deviceName, cmd);
+      await this.mqttDirect.sendRawCommand(data.productKey, data.deviceName, cmd);
+      return;
     }
 
-    // Fallback to HTTP
-    this.api._lastDeviceData = data;
-    await this.api.sendProtobufCommand(data.id, cmd);
+    throw new Error('MQTT not connected - cannot send command');
   }
 
   async startMowing() {
