@@ -37,8 +37,8 @@ class MammotionMowerDevice extends Homey.Device {
       await this.api.login(email, password);
       this.log('Successfully authenticated with Mammotion Cloud');
 
-      // Try MQTT connection for real-time updates
-      this._connectMQTT();
+      // MQTT disabled for v1 - using HTTP polling
+      // this._connectMQTT();
 
       // Start polling as fallback / primary status source
       this._startPolling();
