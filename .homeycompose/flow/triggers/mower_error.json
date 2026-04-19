@@ -1,0 +1,20 @@
+{
+  "title": { "en": "Mower error", "fr": "Erreur tondeuse" },
+  "titleFormatted": { "en": "The mower reported an error", "fr": "La tondeuse a signalé une erreur" },
+  "hint": { "en": "Triggers when the mower reports an error", "fr": "Se déclenche quand la tondeuse signale une erreur" },
+  "tokens": [
+    {
+      "name": "error_code",
+      "type": "string",
+      "title": { "en": "Error code", "fr": "Code erreur" },
+      "example": { "en": "E001" }
+    }
+  ],
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}

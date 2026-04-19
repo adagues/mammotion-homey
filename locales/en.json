@@ -1,0 +1,25 @@
+{
+  "pair": {
+    "login": { "title": "Log in to Mammotion" },
+    "select": { "title": "Select your mower" }
+  },
+  "drivers": {
+    "mammotion-mower": { "name": "Mammotion Mower" }
+  },
+  "flow": {
+    "triggers": {
+      "mower_status_changed": { "title": "Mower status changed" },
+      "mower_error": { "title": "Mower error" }
+    },
+    "conditions": {
+      "mower_is_mowing": { "title": "Mower is mowing" },
+      "mower_is_charging": { "title": "Mower is charging" }
+    },
+    "actions": {
+      "start_mowing": { "title": "Start mowing" },
+      "stop_mowing": { "title": "Stop mowing" },
+      "pause_mowing": { "title": "Pause mowing" },
+      "return_to_dock": { "title": "Return to dock" }
+    }
+  }
+}

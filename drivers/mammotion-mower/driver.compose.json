@@ -1,0 +1,53 @@
+{
+  "name": {
+    "en": "Mammotion Mower",
+    "fr": "Tondeuse Mammotion"
+  },
+  "class": "other",
+  "capabilities": [
+    "measure_battery",
+    "alarm_battery",
+    "mower_state",
+    "mower_activity"
+  ],
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
+  "pair": [
+    {
+      "id": "login",
+      "template": "login_credentials",
+      "options": {
+        "title": { "en": "Log in to Mammotion", "fr": "Connexion à Mammotion" },
+        "usernameLabel": { "en": "Email", "fr": "Email" },
+        "usernamePlaceholder": { "en": "your@email.com", "fr": "votre@email.com" },
+        "passwordLabel": { "en": "Password", "fr": "Mot de passe" },
+        "passwordPlaceholder": { "en": "Password", "fr": "Mot de passe" }
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" },
+      "options": {
+        "title": { "en": "Select your mower", "fr": "Sélectionnez votre tondeuse" }
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "login",
+      "template": "login_credentials",
+      "options": {
+        "title": { "en": "Re-authenticate", "fr": "Ré-authentification" }
+      }
+    }
+  ],
+  "images": {
+    "small": "/drivers/mammotion-mower/assets/icon.svg",
+    "large": "/drivers/mammotion-mower/assets/icon.svg"
+  }
+}

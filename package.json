@@ -1,0 +1,15 @@
+{
+  "name": "com.mammotion.mower",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "build": "echo 'No build step needed'"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0",
+    "mqtt": "^5.10.7"
+  }
+}

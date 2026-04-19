@@ -1,0 +1,12 @@
+{
+  "title": { "en": "Start mowing", "fr": "Démarrer la tonte" },
+  "titleFormatted": { "en": "Start mowing", "fr": "Démarrer la tonte" },
+  "hint": { "en": "Start the mower", "fr": "Démarre la tondeuse" },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}

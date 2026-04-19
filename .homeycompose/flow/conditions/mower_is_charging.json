@@ -1,0 +1,12 @@
+{
+  "title": { "en": "Mower is charging", "fr": "La tondeuse charge" },
+  "titleFormatted": { "en": "The mower !{{is|is not}} charging", "fr": "La tondeuse !{{charge|ne charge pas}}" },
+  "hint": { "en": "Check if the mower is currently charging", "fr": "Vérifie si la tondeuse est en charge" },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}

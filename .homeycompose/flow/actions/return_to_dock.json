@@ -1,0 +1,12 @@
+{
+  "title": { "en": "Return to dock", "fr": "Retour à la base" },
+  "titleFormatted": { "en": "Return to the dock", "fr": "Retourner à la base de charge" },
+  "hint": { "en": "Send the mower back to its charging station", "fr": "Renvoie la tondeuse à sa station de charge" },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}

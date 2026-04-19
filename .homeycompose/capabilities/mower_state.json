@@ -1,0 +1,16 @@
+{
+  "type": "enum",
+  "title": { "en": "Mower State", "fr": "État de la tondeuse" },
+  "values": [
+    { "id": "idle", "title": { "en": "Idle", "fr": "En veille" } },
+    { "id": "mowing", "title": { "en": "Mowing", "fr": "En tonte" } },
+    { "id": "charging", "title": { "en": "Charging", "fr": "En charge" } },
+    { "id": "paused", "title": { "en": "Paused", "fr": "En pause" } },
+    { "id": "error", "title": { "en": "Error", "fr": "Erreur" } },
+    { "id": "returning", "title": { "en": "Returning to dock", "fr": "Retour à la base" } }
+  ],
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/icon.svg"
+}

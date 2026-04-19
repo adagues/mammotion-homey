@@ -1,0 +1,25 @@
+{
+  "pair": {
+    "login": { "title": "Connexion à Mammotion" },
+    "select": { "title": "Sélectionnez votre tondeuse" }
+  },
+  "drivers": {
+    "mammotion-mower": { "name": "Tondeuse Mammotion" }
+  },
+  "flow": {
+    "triggers": {
+      "mower_status_changed": { "title": "État de la tondeuse changé" },
+      "mower_error": { "title": "Erreur tondeuse" }
+    },
+    "conditions": {
+      "mower_is_mowing": { "title": "La tondeuse tond" },
+      "mower_is_charging": { "title": "La tondeuse charge" }
+    },
+    "actions": {
+      "start_mowing": { "title": "Démarrer la tonte" },
+      "stop_mowing": { "title": "Arrêter la tonte" },
+      "pause_mowing": { "title": "Mettre en pause" },
+      "return_to_dock": { "title": "Retour à la base" }
+    }
+  }
+}

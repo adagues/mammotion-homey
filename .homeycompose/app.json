@@ -1,0 +1,26 @@
+{
+  "id": "com.mammotion.mower",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": ["local"],
+  "brandColor": "#4CAF50",
+  "name": { "en": "Mammotion Mower", "fr": "Tondeuse Mammotion" },
+  "description": {
+    "en": "Control your Mammotion robot mower from Homey",
+    "fr": "Contrôlez votre tondeuse robot Mammotion depuis Homey"
+  },
+  "category": ["appliances"],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Alexis D"
+  },
+  "bugs": {
+    "url": "https://github.com/issues"
+  }
+}

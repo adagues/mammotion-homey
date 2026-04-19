@@ -1,0 +1,12 @@
+{
+  "title": { "en": "Stop mowing", "fr": "Arrêter la tonte" },
+  "titleFormatted": { "en": "Stop mowing", "fr": "Arrêter la tonte" },
+  "hint": { "en": "Stop the mower", "fr": "Arrête la tondeuse" },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}

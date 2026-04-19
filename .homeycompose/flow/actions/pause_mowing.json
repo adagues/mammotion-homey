@@ -1,0 +1,12 @@
+{
+  "title": { "en": "Pause mowing", "fr": "Mettre en pause" },
+  "titleFormatted": { "en": "Pause mowing", "fr": "Mettre la tonte en pause" },
+  "hint": { "en": "Pause the mower", "fr": "Met la tondeuse en pause" },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}

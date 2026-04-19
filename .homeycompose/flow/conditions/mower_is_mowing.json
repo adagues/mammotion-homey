@@ -1,0 +1,12 @@
+{
+  "title": { "en": "Mower is mowing", "fr": "La tondeuse tond" },
+  "titleFormatted": { "en": "The mower !{{is|is not}} mowing", "fr": "La tondeuse !{{tond|ne tond pas}}" },
+  "hint": { "en": "Check if the mower is currently mowing", "fr": "Vérifie si la tondeuse est en train de tondre" },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}

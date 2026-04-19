@@ -1,0 +1,20 @@
+{
+  "title": { "en": "Mower status changed", "fr": "État de la tondeuse changé" },
+  "titleFormatted": { "en": "The mower state changed", "fr": "L'état de la tondeuse a changé" },
+  "hint": { "en": "Triggers when the mower state changes", "fr": "Se déclenche quand l'état de la tondeuse change" },
+  "tokens": [
+    {
+      "name": "state",
+      "type": "string",
+      "title": { "en": "State", "fr": "État" },
+      "example": { "en": "mowing", "fr": "en tonte" }
+    }
+  ],
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=mammotion-mower"
+    }
+  ]
+}
