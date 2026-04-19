@@ -91,11 +91,8 @@ class MammotionMowerDevice extends Homey.Device {
       });
 
       this.mqttDirect.on('connected', () => {
-        this.log('MQTT Direct connected!');
-        const { deviceName, productKey } = this.getData();
-        if (productKey && deviceName) {
-          this.mqttDirect.subscribeDevice(productKey, deviceName);
-        }
+        this.log('MQTT Direct connected! Ready to send commands.');
+        // Don't subscribe to topics - just use for publishing commands
       });
 
       this.mqttDirect.on('message', ({ topic, payload }) => {
