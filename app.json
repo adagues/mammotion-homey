@@ -1,0 +1,378 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.mammotion.mower",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "brandColor": "#4CAF50",
+  "name": {
+    "en": "Mammotion Mower"
+  },
+  "description": {
+    "en": "Control your Mammotion robot mower from Homey"
+  },
+  "category": [
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Alexis D"
+  },
+  "bugs": {
+    "url": "https://github.com/adagues/homey-mammotion/issues"
+  },
+  "source": "https://github.com/adagues/homey-mammotion",
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "Mower error",
+          "fr": "Erreur tondeuse"
+        },
+        "titleFormatted": {
+          "en": "The mower reported an error",
+          "fr": "La tondeuse a signalé une erreur"
+        },
+        "hint": {
+          "en": "Triggers when the mower reports an error",
+          "fr": "Se déclenche quand la tondeuse signale une erreur"
+        },
+        "tokens": [
+          {
+            "name": "error_code",
+            "type": "string",
+            "title": {
+              "en": "Error code",
+              "fr": "Code erreur"
+            },
+            "example": {
+              "en": "E001"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "mower_error"
+      },
+      {
+        "title": {
+          "en": "Mower status changed",
+          "fr": "État de la tondeuse changé"
+        },
+        "titleFormatted": {
+          "en": "The mower state changed",
+          "fr": "L'état de la tondeuse a changé"
+        },
+        "hint": {
+          "en": "Triggers when the mower state changes",
+          "fr": "Se déclenche quand l'état de la tondeuse change"
+        },
+        "tokens": [
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "State",
+              "fr": "État"
+            },
+            "example": {
+              "en": "mowing",
+              "fr": "en tonte"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "mower_status_changed"
+      }
+    ],
+    "conditions": [
+      {
+        "title": {
+          "en": "Mower is charging",
+          "fr": "La tondeuse charge"
+        },
+        "titleFormatted": {
+          "en": "The mower !{{is|is not}} charging",
+          "fr": "La tondeuse !{{charge|ne charge pas}}"
+        },
+        "hint": {
+          "en": "Check if the mower is currently charging",
+          "fr": "Vérifie si la tondeuse est en charge"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "mower_is_charging"
+      },
+      {
+        "title": {
+          "en": "Mower is mowing",
+          "fr": "La tondeuse tond"
+        },
+        "titleFormatted": {
+          "en": "The mower !{{is|is not}} mowing",
+          "fr": "La tondeuse !{{tond|ne tond pas}}"
+        },
+        "hint": {
+          "en": "Check if the mower is currently mowing",
+          "fr": "Vérifie si la tondeuse est en train de tondre"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "mower_is_mowing"
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Pause mowing",
+          "fr": "Mettre en pause"
+        },
+        "titleFormatted": {
+          "en": "Pause mowing",
+          "fr": "Mettre la tonte en pause"
+        },
+        "hint": {
+          "en": "Pause the mower",
+          "fr": "Met la tondeuse en pause"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "pause_mowing"
+      },
+      {
+        "title": {
+          "en": "Return to dock",
+          "fr": "Retour à la base"
+        },
+        "titleFormatted": {
+          "en": "Return to the dock",
+          "fr": "Retourner à la base de charge"
+        },
+        "hint": {
+          "en": "Send the mower back to its charging station",
+          "fr": "Renvoie la tondeuse à sa station de charge"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "return_to_dock"
+      },
+      {
+        "title": {
+          "en": "Start mowing",
+          "fr": "Démarrer la tonte"
+        },
+        "titleFormatted": {
+          "en": "Start mowing",
+          "fr": "Démarrer la tonte"
+        },
+        "hint": {
+          "en": "Start the mower",
+          "fr": "Démarre la tondeuse"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "start_mowing"
+      },
+      {
+        "title": {
+          "en": "Stop mowing",
+          "fr": "Arrêter la tonte"
+        },
+        "titleFormatted": {
+          "en": "Stop mowing",
+          "fr": "Arrêter la tonte"
+        },
+        "hint": {
+          "en": "Stop the mower",
+          "fr": "Arrête la tondeuse"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=mammotion-mower"
+          }
+        ],
+        "id": "stop_mowing"
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Mammotion Mower"
+      },
+      "class": "other",
+      "capabilities": [
+        "measure_battery",
+        "alarm_battery",
+        "mower_state",
+        "mower_activity"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "login",
+          "template": "login_credentials",
+          "options": {
+            "title": {
+              "en": "Log in to Mammotion"
+            },
+            "usernameLabel": {
+              "en": "Email"
+            },
+            "usernamePlaceholder": {
+              "en": "your@email.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          },
+          "options": {
+            "title": {
+              "en": "Select your mower"
+            }
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login",
+          "template": "login_credentials",
+          "options": {
+            "title": {
+              "en": "Re-authenticate"
+            }
+          }
+        }
+      ],
+      "images": {
+        "small": "/drivers/mammotion-mower/assets/icon.svg",
+        "large": "/drivers/mammotion-mower/assets/icon.svg"
+      },
+      "id": "mammotion-mower"
+    }
+  ],
+  "capabilities": {
+    "mower_activity": {
+      "type": "string",
+      "title": {
+        "en": "Activity"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "mower_state": {
+      "type": "enum",
+      "title": {
+        "en": "Mower State"
+      },
+      "values": [
+        {
+          "id": "idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "mowing",
+          "title": {
+            "en": "Mowing"
+          }
+        },
+        {
+          "id": "charging",
+          "title": {
+            "en": "Charging"
+          }
+        },
+        {
+          "id": "paused",
+          "title": {
+            "en": "Paused"
+          }
+        },
+        {
+          "id": "error",
+          "title": {
+            "en": "Error"
+          }
+        },
+        {
+          "id": "returning",
+          "title": {
+            "en": "Returning to dock"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/icon.svg"
+    }
+  }
+}
