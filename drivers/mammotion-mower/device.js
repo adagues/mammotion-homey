@@ -4,7 +4,7 @@ const Homey = require('homey');
 const MammotionAPI = require('../../lib/MammotionAPI');
 const MammotionMQTT = require('../../lib/MammotionMQTT');
 
-const POLL_INTERVAL = 30000; // 30 seconds
+const POLL_INTERVAL = 60000; // 60 seconds (Aliyun rate limit is strict)
 
 class MammotionMowerDevice extends Homey.Device {
 
