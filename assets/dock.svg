@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- House/dock shape -->
+  <path d="M50 12 L88 45 L88 88 L12 88 L12 45 Z" fill="currentColor"/>
+  <!-- Lightning bolt (charging) -->
+  <polygon points="55,35 45,55 55,55 45,75 65,48 53,48 60,35" fill="#fff"/>
+</svg>
