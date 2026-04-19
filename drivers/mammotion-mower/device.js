@@ -254,27 +254,31 @@ class MammotionMowerDevice extends Homey.Device {
   // ── Commands ────────────────────────────────────────────
 
   async startMowing() {
-    const { id, deviceName, productKey } = this.getData();
+    const data = this.getData();
+    this.api._lastDeviceData = data;
     this.log('Starting mowing');
-    await this.api.startMowing(id, deviceName, productKey);
+    await this.api.startMowing(data.id);
   }
 
   async stopMowing() {
-    const { id, deviceName, productKey } = this.getData();
+    const data = this.getData();
+    this.api._lastDeviceData = data;
     this.log('Stopping mowing');
-    await this.api.stopMowing(id, deviceName, productKey);
+    await this.api.stopMowing(data.id);
   }
 
   async pauseMowing() {
-    const { id, deviceName, productKey } = this.getData();
+    const data = this.getData();
+    this.api._lastDeviceData = data;
     this.log('Pausing mowing');
-    await this.api.pauseMowing(id, deviceName, productKey);
+    await this.api.pauseMowing(data.id);
   }
 
   async returnToDock() {
-    const { id, deviceName, productKey } = this.getData();
+    const data = this.getData();
+    this.api._lastDeviceData = data;
     this.log('Returning to dock');
-    await this.api.returnToDock(id, deviceName, productKey);
+    await this.api.returnToDock(data.id);
   }
 
   // ── Lifecycle ───────────────────────────────────────────
