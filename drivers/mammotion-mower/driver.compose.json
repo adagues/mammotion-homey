@@ -1,7 +1,6 @@
 {
   "name": {
-    "en": "Mammotion Mower",
-    "fr": "Tondeuse Mammotion"
+    "en": "Mammotion Mower"
   },
   "class": "other",
   "capabilities": [
@@ -17,11 +16,11 @@
       "id": "login",
       "template": "login_credentials",
       "options": {
-        "title": { "en": "Log in to Mammotion", "fr": "Connexion à Mammotion" },
-        "usernameLabel": { "en": "Email", "fr": "Email" },
-        "usernamePlaceholder": { "en": "your@email.com", "fr": "votre@email.com" },
-        "passwordLabel": { "en": "Password", "fr": "Mot de passe" },
-        "passwordPlaceholder": { "en": "Password", "fr": "Mot de passe" }
+        "title": { "en": "Log in to Mammotion" },
+        "usernameLabel": { "en": "Email" },
+        "usernamePlaceholder": { "en": "your@email.com" },
+        "passwordLabel": { "en": "Password" },
+        "passwordPlaceholder": { "en": "Password" }
       }
     },
     {
@@ -29,7 +28,7 @@
       "template": "list_devices",
       "navigation": { "next": "add_devices" },
       "options": {
-        "title": { "en": "Select your mower", "fr": "Sélectionnez votre tondeuse" }
+        "title": { "en": "Select your mower" }
       }
     },
     {
@@ -42,7 +41,7 @@
       "id": "login",
       "template": "login_credentials",
       "options": {
-        "title": { "en": "Re-authenticate", "fr": "Ré-authentification" }
+        "title": { "en": "Re-authenticate" }
       }
     }
   ],
