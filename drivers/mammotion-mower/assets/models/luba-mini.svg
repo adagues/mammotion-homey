@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bodyTop" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4a4a4a"/>
+      <stop offset="100%" stop-color="#555555"/>
+    </linearGradient>
+    <linearGradient id="bodyRight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="100%" stop-color="#333333"/>
+    </linearGradient>
+    <linearGradient id="bodyLeft" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#444444"/>
+      <stop offset="100%" stop-color="#3a3a3a"/>
+    </linearGradient>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="160" rx="55" ry="18" fill="rgba(0,0,0,0.15)"/>
+  <!-- Blade deck underneath -->
+  <polygon points="60,140 100,155 140,140 100,125" fill="#2a2a2a"/>
+  <!-- Rear left wheel -->
+  <ellipse cx="68" cy="132" rx="8" ry="12" fill="#222222" transform="rotate(-15,68,132)"/>
+  <ellipse cx="68" cy="132" rx="5" ry="9" fill="#2a2a2a" transform="rotate(-15,68,132)"/>
+  <!-- Rear right wheel -->
+  <ellipse cx="132" cy="132" rx="8" ry="12" fill="#1a1a1a" transform="rotate(15,132,132)"/>
+  <ellipse cx="132" cy="132" rx="5" ry="9" fill="#222222" transform="rotate(15,132,132)"/>
+  <!-- Front left wheel -->
+  <ellipse cx="75" cy="108" rx="7" ry="10" fill="#222222" transform="rotate(-15,75,108)"/>
+  <ellipse cx="75" cy="108" rx="4" ry="7" fill="#2a2a2a" transform="rotate(-15,75,108)"/>
+  <!-- Front right wheel -->
+  <ellipse cx="125" cy="108" rx="7" ry="10" fill="#1a1a1a" transform="rotate(15,125,108)"/>
+  <ellipse cx="125" cy="108" rx="4" ry="7" fill="#222222" transform="rotate(15,125,108)"/>
+  <!-- Body left face -->
+  <polygon points="55,100 55,130 100,148 100,118" fill="url(#bodyLeft)"/>
+  <!-- Body right face -->
+  <polygon points="145,100 145,130 100,148 100,118" fill="url(#bodyRight)"/>
+  <!-- Body top face -->
+  <polygon points="55,100 100,82 145,100 100,118" fill="url(#bodyTop)"/>
+  <!-- Green accent stripe - top -->
+  <polygon points="60,102 100,86 140,102 100,118" fill="none" stroke="#4CAF50" stroke-width="2"/>
+  <!-- Green stripe on left -->
+  <line x1="55" y1="115" x2="100" y2="133" stroke="#4CAF50" stroke-width="2.5"/>
+  <!-- Green stripe on right -->
+  <line x1="145" y1="115" x2="100" y2="133" stroke="#4CAF50" stroke-width="2.5"/>
+  <!-- Headlights -->
+  <ellipse cx="72" cy="97" rx="4" ry="2.5" fill="#e0e0e0" opacity="0.9"/>
+  <ellipse cx="88" cy="91" rx="4" ry="2.5" fill="#e0e0e0" opacity="0.9"/>
+  <!-- Front sensor bar -->
+  <line x1="65" y1="99" x2="95" y2="88" stroke="#4CAF50" stroke-width="1.5" opacity="0.8"/>
+  <!-- RTK antenna mast -->
+  <line x1="100" y1="100" x2="100" y2="68" stroke="#555555" stroke-width="2.5"/>
+  <circle cx="100" cy="66" r="4" fill="#666666"/>
+  <circle cx="100" cy="66" r="2.5" fill="#4CAF50"/>
+  <!-- Top surface details -->
+  <polygon points="75,98 100,88 125,98 100,108" fill="#4d4d4d" opacity="0.5"/>
+</svg>
