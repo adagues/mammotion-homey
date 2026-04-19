@@ -45,8 +45,25 @@ class MammotionMowerDevice extends Homey.Device {
   }
 
   _registerCapabilityListeners() {
-    // Currently all custom capabilities are read-only
-    // Future: add listeners for settable capabilities
+    this.registerCapabilityListener('button_start', async () => {
+      this.log('Button: Start mowing');
+      await this.startMowing();
+    });
+
+    this.registerCapabilityListener('button_pause', async () => {
+      this.log('Button: Pause mowing');
+      await this.pauseMowing();
+    });
+
+    this.registerCapabilityListener('button_stop', async () => {
+      this.log('Button: Stop mowing');
+      await this.stopMowing();
+    });
+
+    this.registerCapabilityListener('button_dock', async () => {
+      this.log('Button: Return to dock');
+      await this.returnToDock();
+    });
   }
 
   _connectMQTT() {

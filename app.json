@@ -251,7 +251,11 @@
         "measure_battery",
         "alarm_battery",
         "mower_state",
-        "mower_activity"
+        "mower_activity",
+        "button_start",
+        "button_pause",
+        "button_stop",
+        "button_dock"
       ],
       "connectivity": [
         "cloud"
@@ -317,6 +321,46 @@
     }
   ],
   "capabilities": {
+    "button_dock": {
+      "type": "boolean",
+      "title": {
+        "en": "Return to Dock"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/dock.svg"
+    },
+    "button_pause": {
+      "type": "boolean",
+      "title": {
+        "en": "Pause"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/pause.svg"
+    },
+    "button_start": {
+      "type": "boolean",
+      "title": {
+        "en": "Start Mowing"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/play.svg"
+    },
+    "button_stop": {
+      "type": "boolean",
+      "title": {
+        "en": "Stop"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/stop.svg"
+    },
     "mower_activity": {
       "type": "string",
       "title": {

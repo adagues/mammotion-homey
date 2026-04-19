@@ -7,7 +7,11 @@
     "measure_battery",
     "alarm_battery",
     "mower_state",
-    "mower_activity"
+    "mower_activity",
+    "button_start",
+    "button_pause",
+    "button_stop",
+    "button_dock"
   ],
   "connectivity": ["cloud"],
   "platforms": ["local"],

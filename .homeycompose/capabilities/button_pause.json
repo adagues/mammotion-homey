@@ -1,0 +1,8 @@
+{
+  "type": "boolean",
+  "title": { "en": "Pause" },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "icon": "/assets/pause.svg"
+}

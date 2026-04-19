@@ -1,0 +1,8 @@
+{
+  "type": "boolean",
+  "title": { "en": "Return to Dock" },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "icon": "/assets/dock.svg"
+}
