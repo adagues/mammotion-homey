@@ -111,45 +111,37 @@ class MammotionMowerDevice extends Homey.Device {
   }
 
   _startPolling() {
-    // Initial poll
-    this.pollStatus().catch(err => this.error('Initial poll failed:', err.message));
+    // Delay first poll by 30s to leave room for commands right after auth
+    this._pollTimeout = this.homey.setTimeout(async () => {
+      await this.pollStatus().catch(err => this.error('Initial poll failed:', err.message));
 
-    this._pollInterval = this.homey.setInterval(async () => {
-      try {
-        await this.pollStatus();
-      } catch (err) {
-        this.error('Poll failed:', err.message);
-
-        // Try to re-authenticate on auth errors
-        if (err.message.includes('token') || err.message.includes('auth') || err.message.includes('401')) {
-          try {
-            await this.api.refreshToken();
-            this.log('Token refreshed successfully');
-          } catch (refreshErr) {
-            this.error('Token refresh failed:', refreshErr.message);
-            this.setUnavailable('Authentication expired. Please re-pair.');
+      // Then poll every 5 minutes (Aliyun rate limit is very strict)
+      this._pollInterval = this.homey.setInterval(async () => {
+        try {
+          await this.pollStatus();
+        } catch (err) {
+          this.error('Poll failed:', err.message);
+          if (err.message.includes('token') || err.message.includes('auth') || err.message.includes('401')) {
+            try {
+              await this.api.refreshToken();
+              this.log('Token refreshed successfully');
+            } catch (refreshErr) {
+              this.error('Token refresh failed:', refreshErr.message);
+              this.setUnavailable('Authentication expired. Please re-pair.');
+            }
           }
         }
-      }
-    }, POLL_INTERVAL);
+      }, 300000); // 5 minutes
+    }, 30000); // 30s initial delay
   }
 
   async pollStatus() {
     const iotId = this.getData().id;
 
-    // Try status endpoint first
-    try {
-      const status = await this.api.getDeviceStatus(iotId);
-      this.log('Device status:', JSON.stringify(status));
-      this._processStatusPayload(status);
-    } catch (err) {
-      this.log('Status endpoint failed:', err.message);
-    }
-
-    // Also try properties endpoint
+    // Only poll properties (status/get is redundant, properties has deviceState)
     try {
       const props = await this.api.getDeviceProperties(iotId);
-      this.log('Device properties:', JSON.stringify(props));
+      this.log('Device properties received');
       this._processPropertiesPayload(props);
     } catch (err) {
       this.log('Properties endpoint failed:', err.message);
