@@ -161,17 +161,23 @@ class MammotionMowerDevice extends Homey.Device {
   _applyProperties(props) {
     if (!props || typeof props !== 'object') return;
 
-    // Battery level — try various property names
-    const battery = props.battery_level ?? props.batteryLevel ?? props.battery ?? props.BatteryLevel;
-    if (battery !== undefined) {
-      const batteryNum = Number(battery);
-      if (!isNaN(batteryNum)) {
-        this.setCapabilityValue('measure_battery', batteryNum).catch(this.error);
-        this.setCapabilityValue('alarm_battery', batteryNum < 15).catch(this.error);
+    // Helper to extract value from Aliyun property format {time, value}
+    const val = (obj) => (obj && obj.value !== undefined) ? obj.value : obj;
+
+    // Battery level — Mammotion uses 'batteryPercentage'
+    const batteryRaw = val(props.batteryPercentage) ?? val(props.battery_level);
+    if (batteryRaw !== undefined) {
+      const battery = Number(batteryRaw);
+      if (!isNaN(battery)) {
+        this.setCapabilityValue('measure_battery', battery).catch(this.error);
+        this.setCapabilityValue('alarm_battery', battery < 15).catch(this.error);
       }
     }
 
-    // Device state mapping
+    // Device state — Mammotion 'deviceState' values:
+    // 0=idle, 1=mowing, 2=charging, 3=paused, 4=error, 5=returning
+    // 6=upgrading, 7=standby, 8=area_training, 9=border_recording
+    // 10=docked_idle, 11=docked_charging, 12=docked_charged
     const stateMap = {
       0: 'idle',
       1: 'mowing',
@@ -179,30 +185,51 @@ class MammotionMowerDevice extends Homey.Device {
       3: 'paused',
       4: 'error',
       5: 'returning',
+      6: 'idle',       // upgrading
+      7: 'idle',       // standby
+      8: 'mowing',     // area training
+      9: 'mowing',     // border recording
+      10: 'idle',      // docked idle
+      11: 'charging',  // docked charging
+      12: 'idle',      // docked fully charged
     };
 
-    const state = props.device_state ?? props.deviceState ?? props.sys_status ?? props.work_mode;
-    if (state !== undefined) {
-      const stateId = stateMap[state] || 'idle';
+    const stateRaw = val(props.deviceState) ?? val(props.device_state);
+    if (stateRaw !== undefined) {
+      const stateNum = Number(stateRaw);
+      const stateId = stateMap[stateNum] || 'idle';
       const currentState = this.getCapabilityValue('mower_state');
+
       if (currentState !== stateId) {
         this.setCapabilityValue('mower_state', stateId).catch(this.error);
         this.homey.flow.getDeviceTriggerCard('mower_status_changed')
           .trigger(this, { state: stateId })
           .catch(this.error);
         if (stateId === 'error') {
-          const errorCode = props.error_code || 'unknown';
           this.homey.flow.getDeviceTriggerCard('mower_error')
-            .trigger(this, { error_code: String(errorCode) })
+            .trigger(this, { error_code: String(stateNum) })
             .catch(this.error);
         }
       }
     }
 
-    // Activity / work mode
-    const activity = props.work_mode ?? props.workMode ?? props.activity;
-    if (activity !== undefined) {
-      this.setCapabilityValue('mower_activity', String(activity)).catch(this.error);
+    // Activity — build a human-readable activity string
+    const deviceStateNum = val(props.deviceState);
+    const activityMap = {
+      0: 'Idle', 1: 'Mowing', 2: 'Charging', 3: 'Paused',
+      4: 'Error', 5: 'Returning to dock', 6: 'Upgrading firmware',
+      7: 'Standby', 8: 'Area training', 9: 'Recording border',
+      10: 'Docked (idle)', 11: 'Docked (charging)', 12: 'Docked (fully charged)',
+    };
+    if (deviceStateNum !== undefined) {
+      const activity = activityMap[Number(deviceStateNum)] || `State ${deviceStateNum}`;
+      this.setCapabilityValue('mower_activity', activity).catch(this.error);
+    }
+
+    // Blade height — Mammotion uses 'knifeHeight'
+    const knifeHeight = val(props.knifeHeight);
+    if (knifeHeight !== undefined) {
+      this.log(`Blade height: ${knifeHeight}mm`);
     }
   }
 
