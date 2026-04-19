@@ -110,59 +110,99 @@ class MammotionMowerDevice extends Homey.Device {
 
   async pollStatus() {
     const iotId = this.getData().id;
-    const props = await this.api.getDeviceProperties(iotId);
-    this._processStatusPayload(props);
+
+    // Try status endpoint first
+    try {
+      const status = await this.api.getDeviceStatus(iotId);
+      this.log('Device status:', JSON.stringify(status));
+      this._processStatusPayload(status);
+    } catch (err) {
+      this.log('Status endpoint failed:', err.message);
+    }
+
+    // Also try properties endpoint
+    try {
+      const props = await this.api.getDeviceProperties(iotId);
+      this.log('Device properties:', JSON.stringify(props));
+      this._processPropertiesPayload(props);
+    } catch (err) {
+      this.log('Properties endpoint failed:', err.message);
+    }
   }
 
-  _processStatusPayload(props) {
+  _processStatusPayload(data) {
     try {
-      // Battery level
-      if (props.battery_level !== undefined) {
-        const battery = Number(props.battery_level);
-        if (!isNaN(battery)) {
-          this.setCapabilityValue('measure_battery', battery).catch(this.error);
-          this.setCapabilityValue('alarm_battery', battery < 15).catch(this.error);
+      // Aliyun thing/status/get returns device online status
+      if (data && data.status !== undefined) {
+        this.log('Device online status:', data.status);
+        // status 1 = online, 0 = offline
+        if (data.status === 0) {
+          this.setCapabilityValue('mower_activity', 'Offline').catch(this.error);
         }
       }
 
-      // Device state mapping
-      const stateMap = {
-        0: 'idle',
-        1: 'mowing',
-        2: 'charging',
-        3: 'paused',
-        4: 'error',
-        5: 'returning',
-      };
-
-      if (props.device_state !== undefined) {
-        const stateId = stateMap[props.device_state] || 'idle';
-        const currentState = this.getCapabilityValue('mower_state');
-
-        if (currentState !== stateId) {
-          this.setCapabilityValue('mower_state', stateId).catch(this.error);
-
-          // Trigger flow: state changed
-          this.homey.flow.getDeviceTriggerCard('mower_status_changed')
-            .trigger(this, { state: stateId })
-            .catch(this.error);
-
-          // Trigger flow: error
-          if (stateId === 'error') {
-            const errorCode = props.error_code || 'unknown';
-            this.homey.flow.getDeviceTriggerCard('mower_error')
-              .trigger(this, { error_code: String(errorCode) })
-              .catch(this.error);
-          }
-        }
-      }
-
-      // Activity / work mode
-      if (props.work_mode !== undefined) {
-        this.setCapabilityValue('mower_activity', String(props.work_mode)).catch(this.error);
-      }
+      // Try to extract properties from various response formats
+      const props = data.properties || data.items || data;
+      this._applyProperties(props);
     } catch (err) {
       this.error('Error processing status payload:', err.message);
+    }
+  }
+
+  _processPropertiesPayload(data) {
+    try {
+      const props = data.properties || data.items || data;
+      this._applyProperties(props);
+    } catch (err) {
+      this.error('Error processing properties payload:', err.message);
+    }
+  }
+
+  _applyProperties(props) {
+    if (!props || typeof props !== 'object') return;
+
+    // Battery level — try various property names
+    const battery = props.battery_level ?? props.batteryLevel ?? props.battery ?? props.BatteryLevel;
+    if (battery !== undefined) {
+      const batteryNum = Number(battery);
+      if (!isNaN(batteryNum)) {
+        this.setCapabilityValue('measure_battery', batteryNum).catch(this.error);
+        this.setCapabilityValue('alarm_battery', batteryNum < 15).catch(this.error);
+      }
+    }
+
+    // Device state mapping
+    const stateMap = {
+      0: 'idle',
+      1: 'mowing',
+      2: 'charging',
+      3: 'paused',
+      4: 'error',
+      5: 'returning',
+    };
+
+    const state = props.device_state ?? props.deviceState ?? props.sys_status ?? props.work_mode;
+    if (state !== undefined) {
+      const stateId = stateMap[state] || 'idle';
+      const currentState = this.getCapabilityValue('mower_state');
+      if (currentState !== stateId) {
+        this.setCapabilityValue('mower_state', stateId).catch(this.error);
+        this.homey.flow.getDeviceTriggerCard('mower_status_changed')
+          .trigger(this, { state: stateId })
+          .catch(this.error);
+        if (stateId === 'error') {
+          const errorCode = props.error_code || 'unknown';
+          this.homey.flow.getDeviceTriggerCard('mower_error')
+            .trigger(this, { error_code: String(errorCode) })
+            .catch(this.error);
+        }
+      }
+    }
+
+    // Activity / work mode
+    const activity = props.work_mode ?? props.workMode ?? props.activity;
+    if (activity !== undefined) {
+      this.setCapabilityValue('mower_activity', String(activity)).catch(this.error);
     }
   }
 
