@@ -3,6 +3,7 @@
 const Homey = require('homey');
 const MammotionAPI = require('../../lib/MammotionAPI');
 const MammotionMQTTDirect = require('../../lib/MammotionMQTTDirect');
+const AliyunMQTTTransport = require('../../lib/AliyunMQTTTransport');
 
 const POLL_INTERVAL = 60000; // 60 seconds (Aliyun rate limit is strict)
 
@@ -42,8 +43,11 @@ class MammotionMowerDevice extends Homey.Device {
       await this.api.login(email, password);
       this.log('Successfully authenticated with Mammotion Cloud');
 
-      // Connect MQTT Direct for commands
+      // Connect Mammotion MQTT (for future use)
       this._connectMQTTDirect();
+
+      // Connect Aliyun MQTT Transport (bind enables HTTP commands)
+      this._connectAliyunMQTT();
 
       // Start polling as fallback / primary status source
       this._startPolling();
@@ -84,33 +88,63 @@ class MammotionMowerDevice extends Homey.Device {
     try {
       const creds = this.api.mqttCredentials;
       if (!creds) {
-        this.log('No MQTT credentials available');
+        this.log('No Mammotion MQTT credentials available');
         return;
       }
-
       this.mqttDirect = new MammotionMQTTDirect({
         host: creds.host,
         jwt: creds.jwt,
         clientId: creds.clientId || creds.client_id,
         username: creds.username,
       });
-
       this.mqttDirect.on('connected', () => {
-        this.log('MQTT Direct connected! Ready to send commands.');
-        // Don't subscribe to topics - just use for publishing commands
+        this.log('Mammotion MQTT connected');
       });
-
-      this.mqttDirect.on('message', ({ topic, payload }) => {
-        this.log('MQTT message:', topic);
-      });
-
       this.mqttDirect.on('error', (err) => {
-        this.error('MQTT Direct error:', err.message);
+        this.error('Mammotion MQTT error:', err.message);
       });
-
       this.mqttDirect.connect();
     } catch (err) {
-      this.error('MQTT Direct setup failed:', err.message);
+      this.error('Mammotion MQTT setup failed:', err.message);
+    }
+  }
+
+  _connectAliyunMQTT() {
+    try {
+      const aep = this.api.aepResponse;
+      const session = this.api.sessionData;
+      const region = this.api.regionInfo;
+
+      if (!aep || !aep.data) {
+        this.log('No AEP credentials for Aliyun MQTT');
+        return;
+      }
+
+      this.aliyunMqtt = new AliyunMQTTTransport({
+        productKey: aep.data.productKey,
+        deviceName: aep.data.deviceName,
+        deviceSecret: aep.data.deviceSecret,
+        regionId: (region && region.shortRegionId) || 'eu',
+        iotToken: this.api.iotToken || '',
+        clientIdBase: this.api._clientId || 'homey_client',
+      });
+
+      this.aliyunMqtt.on('bound', () => {
+        this.log('AliyunMQTT: BOUND! Commands should work now via HTTP.');
+        this._aliyunBound = true;
+      });
+
+      this.aliyunMqtt.on('device_response', (msg) => {
+        this.log('AliyunMQTT device response received');
+      });
+
+      this.aliyunMqtt.on('error', (err) => {
+        this.error('AliyunMQTT error:', err.message);
+      });
+
+      this.aliyunMqtt.connect();
+    } catch (err) {
+      this.error('AliyunMQTT setup failed:', err.message);
     }
   }
 
@@ -351,14 +385,25 @@ class MammotionMowerDevice extends Homey.Device {
     const data = this.getData();
     const cmd = commandBuilder();
 
-    // Try MQTT Direct publish
-    if (this.mqttDirect && this.mqttDirect.isConnected && data.productKey && data.deviceName) {
-      await this.mqttDirect.sendCommand(data.productKey, data.deviceName, cmd);
-      await this.mqttDirect.sendRawCommand(data.productKey, data.deviceName, cmd);
+    // After Aliyun MQTT bind, try HTTP cloud command
+    if (this._aliyunBound && this.api.iotToken) {
+      this.log('Sending via Aliyun HTTP (post-bind)');
+      this.api._lastDeviceData = data;
+      await this.api.sendProtobufCommand(data.id, cmd);
       return;
     }
 
-    throw new Error('MQTT not connected - cannot send command');
+    // Try MQTT Direct as fallback
+    if (this.mqttDirect && this.mqttDirect.isConnected && data.productKey && data.deviceName) {
+      this.log('Sending via Mammotion MQTT');
+      await this.mqttDirect.sendCommand(data.productKey, data.deviceName, cmd);
+      return;
+    }
+
+    // Last resort: HTTP without bind
+    this.log('Sending via HTTP (no bind)');
+    this.api._lastDeviceData = data;
+    await this.api.sendProtobufCommand(data.id, cmd);
   }
 
   async startMowing() {
