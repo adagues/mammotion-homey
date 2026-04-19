@@ -120,13 +120,16 @@ class MammotionMowerDevice extends Homey.Device {
         return;
       }
 
+      const aepPk = aep.data.productKey;
+      const aepDn = aep.data.deviceName;
+
       this.aliyunMqtt = new AliyunMQTTTransport({
-        productKey: aep.data.productKey,
-        deviceName: aep.data.deviceName,
+        productKey: aepPk,
+        deviceName: aepDn,
         deviceSecret: aep.data.deviceSecret,
-        regionId: (region && region.regionId) || (region && region.shortRegionId) || 'eu-central-1',
+        regionId: (region && region.regionId) || 'eu-central-1',
         iotToken: this.api.iotToken || '',
-        clientIdBase: this.api._clientId || 'homey_client',
+        clientIdBase: `${aepPk}&${aepDn}`,
       });
 
       this.aliyunMqtt.on('bound', () => {
