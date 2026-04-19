@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "title": { "en": "RTK Status" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/satellite.svg"
+}

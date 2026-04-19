@@ -11,7 +11,17 @@
     "button_start",
     "button_pause",
     "button_stop",
-    "button_dock"
+    "button_dock",
+    "measure_blade_height",
+    "measure_wifi_signal",
+    "meter_mileage",
+    "meter_work_time",
+    "measure_temperature",
+    "alarm_rtk",
+    "meter_task_area",
+    "device_model",
+    "firmware_version",
+    "wifi_network"
   ],
   "connectivity": ["cloud"],
   "platforms": ["local"],

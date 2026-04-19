@@ -1,0 +1,10 @@
+{
+  "type": "number",
+  "title": { "en": "Blade Height" },
+  "units": { "en": "mm" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/blade.svg",
+  "insights": true
+}

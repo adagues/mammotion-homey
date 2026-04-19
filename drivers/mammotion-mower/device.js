@@ -16,7 +16,12 @@ class MammotionMowerDevice extends Homey.Device {
     this._pollInterval = null;
 
     // Dynamically add new capabilities if not present (for devices paired before update)
-    const requiredCaps = ['button_start', 'button_pause', 'button_stop', 'button_dock'];
+    const requiredCaps = [
+      'button_start', 'button_pause', 'button_stop', 'button_dock',
+      'measure_blade_height', 'measure_wifi_signal', 'meter_mileage',
+      'meter_work_time', 'measure_temperature', 'alarm_rtk',
+      'meter_task_area', 'device_model', 'firmware_version', 'wifi_network',
+    ];
     for (const cap of requiredCaps) {
       if (!this.hasCapability(cap)) {
         this.log(`Adding missing capability: ${cap}`);
@@ -278,10 +283,60 @@ class MammotionMowerDevice extends Homey.Device {
       this.setCapabilityValue('mower_activity', activity).catch(this.error);
     }
 
-    // Blade height — Mammotion uses 'knifeHeight'
-    const knifeHeight = val(props.knifeHeight);
-    if (knifeHeight !== undefined) {
-      this.log(`Blade height: ${knifeHeight}mm`);
+    // Blade height
+    const knifeH = val(props.knifeHeight);
+    if (knifeH !== undefined) {
+      this.setCapabilityValue('measure_blade_height', Number(knifeH)).catch(this.error);
+    }
+
+    // Device model
+    const model = val(props.extMod);
+    if (model !== undefined) {
+      this.setCapabilityValue('device_model', String(model)).catch(this.error);
+    }
+
+    // Firmware
+    const fw = val(props.deviceVersion);
+    if (fw !== undefined) {
+      this.setCapabilityValue('firmware_version', String(fw)).catch(this.error);
+    }
+
+    // Network info (JSON string)
+    const netInfoStr = val(props.networkInfo);
+    if (netInfoStr) {
+      try {
+        const net = typeof netInfoStr === 'string' ? JSON.parse(netInfoStr) : netInfoStr;
+        if (net.wifi_rssi !== undefined) {
+          this.setCapabilityValue('measure_wifi_signal', Number(net.wifi_rssi)).catch(this.error);
+        }
+        if (net.ssid) {
+          this.setCapabilityValue('wifi_network', String(net.ssid)).catch(this.error);
+        }
+        if (net.mileage !== undefined) {
+          this.setCapabilityValue('meter_mileage', Number(net.mileage)).catch(this.error);
+        }
+        if (net.work_time) {
+          this.setCapabilityValue('meter_work_time', String(net.work_time)).catch(this.error);
+        }
+      } catch (e) { /* ignore parse errors */ }
+    }
+
+    // Device other info (JSON string)
+    const otherStr = val(props.deviceOtherInfo);
+    if (otherStr) {
+      try {
+        const other = typeof otherStr === 'string' ? JSON.parse(otherStr) : otherStr;
+        if (other.socTmp !== undefined) {
+          this.setCapabilityValue('measure_temperature', Number(other.socTmp)).catch(this.error);
+        }
+        if (other.rtk_status !== undefined) {
+          const rtkMap = { 0: 'No signal', 1: 'Single', 2: 'DGPS', 3: 'PPS', 4: 'RTK Fix', 5: 'RTK Float' };
+          this.setCapabilityValue('alarm_rtk', rtkMap[other.rtk_status] || `Status ${other.rtk_status}`).catch(this.error);
+        }
+        if (other.task_area !== undefined) {
+          this.setCapabilityValue('meter_task_area', Math.round(Number(other.task_area))).catch(this.error);
+        }
+      } catch (e) { /* ignore parse errors */ }
     }
   }
 

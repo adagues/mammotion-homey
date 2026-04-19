@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "title": { "en": "WiFi Network" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/wifi.svg"
+}

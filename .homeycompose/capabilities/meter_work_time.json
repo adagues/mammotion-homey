@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "title": { "en": "Work Time" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/clock.svg"
+}

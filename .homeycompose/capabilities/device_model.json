@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "title": { "en": "Model" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/info.svg"
+}

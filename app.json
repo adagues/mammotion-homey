@@ -255,7 +255,17 @@
         "button_start",
         "button_pause",
         "button_stop",
-        "button_dock"
+        "button_dock",
+        "measure_blade_height",
+        "measure_wifi_signal",
+        "meter_mileage",
+        "meter_work_time",
+        "measure_temperature",
+        "alarm_rtk",
+        "meter_task_area",
+        "device_model",
+        "firmware_version",
+        "wifi_network"
       ],
       "connectivity": [
         "cloud"
@@ -321,6 +331,16 @@
     }
   ],
   "capabilities": {
+    "alarm_rtk": {
+      "type": "string",
+      "title": {
+        "en": "RTK Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/satellite.svg"
+    },
     "button_dock": {
       "type": "boolean",
       "title": {
@@ -360,6 +380,104 @@
       "setable": true,
       "uiComponent": "button",
       "icon": "/assets/stop.svg"
+    },
+    "device_model": {
+      "type": "string",
+      "title": {
+        "en": "Model"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/info.svg"
+    },
+    "firmware_version": {
+      "type": "string",
+      "title": {
+        "en": "Firmware"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/firmware.svg"
+    },
+    "measure_blade_height": {
+      "type": "number",
+      "title": {
+        "en": "Blade Height"
+      },
+      "units": {
+        "en": "mm"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/blade.svg",
+      "insights": true
+    },
+    "measure_temperature": {
+      "type": "number",
+      "title": {
+        "en": "Temperature"
+      },
+      "units": {
+        "en": "°C"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/temp.svg"
+    },
+    "measure_wifi_signal": {
+      "type": "number",
+      "title": {
+        "en": "WiFi Signal"
+      },
+      "units": {
+        "en": "dBm"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/wifi.svg"
+    },
+    "meter_mileage": {
+      "type": "number",
+      "title": {
+        "en": "Total Mileage"
+      },
+      "units": {
+        "en": "m"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/distance.svg",
+      "insights": true
+    },
+    "meter_task_area": {
+      "type": "number",
+      "title": {
+        "en": "Mowing Area"
+      },
+      "units": {
+        "en": "m²"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/area.svg",
+      "insights": true
+    },
+    "meter_work_time": {
+      "type": "string",
+      "title": {
+        "en": "Work Time"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/clock.svg"
     },
     "mower_activity": {
       "type": "string",
@@ -417,6 +535,16 @@
       "setable": false,
       "uiComponent": "sensor",
       "icon": "/assets/icon.svg"
+    },
+    "wifi_network": {
+      "type": "string",
+      "title": {
+        "en": "WiFi Network"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/wifi.svg"
     }
   }
 }

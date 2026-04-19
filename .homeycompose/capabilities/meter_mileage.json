@@ -1,0 +1,10 @@
+{
+  "type": "number",
+  "title": { "en": "Total Mileage" },
+  "units": { "en": "m" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/distance.svg",
+  "insights": true
+}
