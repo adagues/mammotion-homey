@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="b2t" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#404040"/>
+      <stop offset="100%" stop-color="#4a4a4a"/>
+    </linearGradient>
+    <linearGradient id="b2r" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#333333"/>
+      <stop offset="100%" stop-color="#2a2a2a"/>
+    </linearGradient>
+    <linearGradient id="b2l" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="100%" stop-color="#303030"/>
+    </linearGradient>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="162" rx="58" ry="19" fill="rgba(0,0,0,0.15)"/>
+  <!-- Blade deck -->
+  <polygon points="54,140 100,157 146,140 100,123" fill="#252525"/>
+  <!-- Rear wheels -->
+  <ellipse cx="64" cy="134" rx="9" ry="13" fill="#222222" transform="rotate(-15,64,134)"/>
+  <ellipse cx="64" cy="134" rx="5" ry="9" fill="#2a2a2a" transform="rotate(-15,64,134)"/>
+  <ellipse cx="136" cy="134" rx="9" ry="13" fill="#1a1a1a" transform="rotate(15,136,134)"/>
+  <ellipse cx="136" cy="134" rx="5" ry="9" fill="#222222" transform="rotate(15,136,134)"/>
+  <!-- Front wheels -->
+  <ellipse cx="72" cy="107" rx="8" ry="11" fill="#222222" transform="rotate(-15,72,107)"/>
+  <ellipse cx="72" cy="107" rx="4.5" ry="7.5" fill="#2a2a2a" transform="rotate(-15,72,107)"/>
+  <ellipse cx="128" cy="107" rx="8" ry="11" fill="#1a1a1a" transform="rotate(15,128,107)"/>
+  <ellipse cx="128" cy="107" rx="4.5" ry="7.5" fill="#222222" transform="rotate(15,128,107)"/>
+  <!-- Body - more angular/sleek -->
+  <polygon points="52,96 52,130 100,150 100,116" fill="url(#b2l)"/>
+  <polygon points="148,96 148,130 100,150 100,116" fill="url(#b2r)"/>
+  <!-- Top - angular cut -->
+  <polygon points="52,96 100,76 148,96 100,116" fill="url(#b2t)"/>
+  <!-- Angular front edge detail -->
+  <polygon points="52,96 78,84 100,76" fill="#3d3d3d"/>
+  <!-- Green LED strip - left -->
+  <line x1="52" y1="113" x2="100" y2="133" stroke="#4CAF50" stroke-width="2" opacity="0.9"/>
+  <line x1="52" y1="114.5" x2="100" y2="134.5" stroke="#4CAF50" stroke-width="1" opacity="0.4"/>
+  <!-- Green LED strip - right -->
+  <line x1="148" y1="113" x2="100" y2="133" stroke="#4CAF50" stroke-width="2" opacity="0.9"/>
+  <line x1="148" y1="114.5" x2="100" y2="134.5" stroke="#4CAF50" stroke-width="1" opacity="0.4"/>
+  <!-- Green LED strip - top outline -->
+  <polygon points="56,98 100,80 144,98 100,116" fill="none" stroke="#4CAF50" stroke-width="1.2" opacity="0.5"/>
+  <!-- Enhanced front sensor array -->
+  <rect x="62" y="92" width="28" height="5" rx="2" fill="#2a2a2a" transform="rotate(-15,76,94.5)"/>
+  <line x1="64" y1="93" x2="88" y2="85" stroke="#4CAF50" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="68" cy="92" r="2" fill="#4CAF50" opacity="0.6"/>
+  <circle cx="76" cy="89" r="2" fill="#4CAF50" opacity="0.6"/>
+  <circle cx="84" cy="86" r="2" fill="#4CAF50" opacity="0.6"/>
+  <!-- Headlights - sleek -->
+  <path d="M66,96 L74,93 L76,94 L68,97Z" fill="#e0e0e0" opacity="0.85"/>
+  <path d="M82,90 L90,87 L92,88 L84,91Z" fill="#e0e0e0" opacity="0.85"/>
+  <!-- Integrated RTK antenna - lower profile -->
+  <line x1="100" y1="96" x2="100" y2="70" stroke="#444444" stroke-width="2.5"/>
+  <ellipse cx="100" cy="69" rx="5" ry="3" fill="#555555"/>
+  <ellipse cx="100" cy="68" rx="3" ry="2" fill="#4CAF50"/>
+  <!-- Top surface detail -->
+  <polygon points="75,97 100,87 125,97 100,107" fill="#454545" opacity="0.4"/>
+  <line x1="90" y1="91" x2="110" y2="91" stroke="#4CAF50" stroke-width="0.8" opacity="0.4"/>
+</svg>

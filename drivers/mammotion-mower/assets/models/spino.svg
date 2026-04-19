@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="st" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5a5a5a"/>
+      <stop offset="100%" stop-color="#666666"/>
+    </linearGradient>
+    <linearGradient id="sr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#484848"/>
+      <stop offset="100%" stop-color="#404040"/>
+    </linearGradient>
+    <linearGradient id="sl" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#525252"/>
+      <stop offset="100%" stop-color="#484848"/>
+    </linearGradient>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="158" rx="48" ry="16" fill="rgba(0,0,0,0.15)"/>
+  <!-- Blade deck -->
+  <polygon points="62,138 100,152 138,138 100,124" fill="#2a2a2a"/>
+  <!-- Rear wheels - 2WD drive wheels -->
+  <ellipse cx="70" cy="132" rx="9" ry="13" fill="#222222" transform="rotate(-15,70,132)"/>
+  <ellipse cx="70" cy="132" rx="5.5" ry="9" fill="#2a2a2a" transform="rotate(-15,70,132)"/>
+  <ellipse cx="130" cy="132" rx="9" ry="13" fill="#1a1a1a" transform="rotate(15,130,132)"/>
+  <ellipse cx="130" cy="132" rx="5.5" ry="9" fill="#222222" transform="rotate(15,130,132)"/>
+  <!-- Front caster wheels - smaller -->
+  <ellipse cx="80" cy="112" rx="4" ry="6" fill="#333333" transform="rotate(-15,80,112)"/>
+  <ellipse cx="120" cy="112" rx="4" ry="6" fill="#2a2a2a" transform="rotate(15,120,112)"/>
+  <!-- Body - rounder, simpler -->
+  <polygon points="58,102 58,130 100,146 100,118" fill="url(#sl)"/>
+  <polygon points="142,102 142,130 100,146 100,118" fill="url(#sr)"/>
+  <!-- Top - rounder appearance via slight curves -->
+  <polygon points="58,102 100,86 142,102 100,118" fill="url(#st)"/>
+  <!-- Simple body highlights -->
+  <polygon points="70,102 100,90 130,102 100,114" fill="#606060" opacity="0.35"/>
+  <!-- Camera/vision sensor (no RTK) -->
+  <circle cx="92" cy="93" r="4" fill="#2a2a2a"/>
+  <circle cx="92" cy="93" r="2.5" fill="#444444"/>
+  <circle cx="92" cy="93" r="1.2" fill="#666666"/>
+  <!-- Front bumper sensor -->
+  <line x1="66" y1="100" x2="92" y2="90" stroke="#4CAF50" stroke-width="1.5" opacity="0.6"/>
+  <!-- Headlights - simple -->
+  <ellipse cx="72" cy="99" rx="3.5" ry="2" fill="#d0d0d0" opacity="0.85"/>
+  <ellipse cx="86" cy="93.5" rx="3.5" ry="2" fill="#d0d0d0" opacity="0.85"/>
+  <!-- Green accent - subtle -->
+  <line x1="58" y1="116" x2="100" y2="132" stroke="#4CAF50" stroke-width="2"/>
+  <line x1="142" y1="116" x2="100" y2="132" stroke="#4CAF50" stroke-width="2"/>
+</svg>

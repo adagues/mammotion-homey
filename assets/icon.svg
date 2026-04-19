@@ -1,20 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-  <!-- Robot mower top-down view -->
-  <g fill="#000">
-    <!-- Main body - rounded rectangle -->
-    <rect x="200" y="250" width="600" height="500" rx="120" ry="120"/>
-    <!-- Wheels - 4 AWD wheels -->
-    <rect x="160" y="320" width="80" height="140" rx="30"/>
-    <rect x="760" y="320" width="80" height="140" rx="30"/>
-    <rect x="160" y="540" width="80" height="140" rx="30"/>
-    <rect x="760" y="540" width="80" height="140" rx="30"/>
-    <!-- RTK Antenna -->
-    <circle cx="500" cy="310" r="35"/>
-    <rect x="488" y="220" width="24" height="90" rx="12"/>
-    <!-- Cutting blade indicator lines -->
-    <line x1="350" y1="620" x2="650" y2="620" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
-    <line x1="370" y1="660" x2="630" y2="660" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
-    <!-- Front sensor bar -->
-    <rect x="310" y="390" width="380" height="20" rx="10" fill="#fff" opacity="0.3"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="gt" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4a4a4a"/>
+      <stop offset="100%" stop-color="#555555"/>
+    </linearGradient>
+    <linearGradient id="gr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="100%" stop-color="#333333"/>
+    </linearGradient>
+    <linearGradient id="gl" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#444444"/>
+      <stop offset="100%" stop-color="#3a3a3a"/>
+    </linearGradient>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="160" rx="55" ry="18" fill="rgba(0,0,0,0.15)"/>
+  <!-- Blade deck -->
+  <polygon points="58,140 100,156 142,140 100,124" fill="#2a2a2a"/>
+  <!-- Rear wheels -->
+  <ellipse cx="66" cy="132" rx="9" ry="13" fill="#222222" transform="rotate(-15,66,132)"/>
+  <ellipse cx="66" cy="132" rx="5" ry="9" fill="#2a2a2a" transform="rotate(-15,66,132)"/>
+  <ellipse cx="134" cy="132" rx="9" ry="13" fill="#1a1a1a" transform="rotate(15,134,132)"/>
+  <ellipse cx="134" cy="132" rx="5" ry="9" fill="#222222" transform="rotate(15,134,132)"/>
+  <!-- Front wheels -->
+  <ellipse cx="74" cy="108" rx="8" ry="11" fill="#222222" transform="rotate(-15,74,108)"/>
+  <ellipse cx="74" cy="108" rx="4.5" ry="7.5" fill="#2a2a2a" transform="rotate(-15,74,108)"/>
+  <ellipse cx="126" cy="108" rx="8" ry="11" fill="#1a1a1a" transform="rotate(15,126,108)"/>
+  <ellipse cx="126" cy="108" rx="4.5" ry="7.5" fill="#222222" transform="rotate(15,126,108)"/>
+  <!-- Body -->
+  <polygon points="54,100 54,130 100,148 100,118" fill="url(#gl)"/>
+  <polygon points="146,100 146,130 100,148 100,118" fill="url(#gr)"/>
+  <polygon points="54,100 100,82 146,100 100,118" fill="url(#gt)"/>
+  <!-- Green accents -->
+  <line x1="54" y1="115" x2="100" y2="133" stroke="#4CAF50" stroke-width="2.5"/>
+  <line x1="146" y1="115" x2="100" y2="133" stroke="#4CAF50" stroke-width="2.5"/>
+  <!-- Headlights -->
+  <ellipse cx="70" cy="97" rx="4" ry="2.5" fill="#e0e0e0" opacity="0.9"/>
+  <ellipse cx="86" cy="91" rx="4" ry="2.5" fill="#e0e0e0" opacity="0.9"/>
+  <!-- Top panel -->
+  <polygon points="74,99 100,89 126,99 100,109" fill="#4d4d4d" opacity="0.4"/>
+  <!-- Antenna -->
+  <line x1="100" y1="100" x2="100" y2="70" stroke="#555555" stroke-width="2.5"/>
+  <circle cx="100" cy="68" r="4" fill="#666666"/>
+  <circle cx="100" cy="68" r="2.5" fill="#4CAF50"/>
 </svg>
