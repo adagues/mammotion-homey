@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 const MammotionAPI = require('../../lib/MammotionAPI');
-const MammotionMQTT = require('../../lib/MammotionMQTT');
+const MammotionMQTTDirect = require('../../lib/MammotionMQTTDirect');
 
 const POLL_INTERVAL = 60000; // 60 seconds (Aliyun rate limit is strict)
 
@@ -37,8 +37,8 @@ class MammotionMowerDevice extends Homey.Device {
       await this.api.login(email, password);
       this.log('Successfully authenticated with Mammotion Cloud');
 
-      // MQTT disabled for v1 - using HTTP polling
-      // this._connectMQTT();
+      // Connect MQTT Direct for commands
+      this._connectMQTTDirect();
 
       // Start polling as fallback / primary status source
       this._startPolling();
@@ -73,6 +73,43 @@ class MammotionMowerDevice extends Homey.Device {
       this.log('Button: Return to dock');
       await this.returnToDock();
     });
+  }
+
+  _connectMQTTDirect() {
+    try {
+      const creds = this.api.mqttCredentials;
+      if (!creds) {
+        this.log('No MQTT credentials available');
+        return;
+      }
+
+      this.mqttDirect = new MammotionMQTTDirect({
+        host: creds.host,
+        jwt: creds.jwt,
+        clientId: creds.clientId || creds.client_id,
+        username: creds.username,
+      });
+
+      this.mqttDirect.on('connected', () => {
+        this.log('MQTT Direct connected!');
+        const { deviceName, productKey } = this.getData();
+        if (productKey && deviceName) {
+          this.mqttDirect.subscribeDevice(productKey, deviceName);
+        }
+      });
+
+      this.mqttDirect.on('message', ({ topic, payload }) => {
+        this.log('MQTT message:', topic);
+      });
+
+      this.mqttDirect.on('error', (err) => {
+        this.error('MQTT Direct error:', err.message);
+      });
+
+      this.mqttDirect.connect();
+    } catch (err) {
+      this.error('MQTT Direct setup failed:', err.message);
+    }
   }
 
   _connectMQTT() {
@@ -253,32 +290,46 @@ class MammotionMowerDevice extends Homey.Device {
 
   // ── Commands ────────────────────────────────────────────
 
-  async startMowing() {
+  async _sendCommand(commandBuilder) {
     const data = this.getData();
+    const cmd = commandBuilder();
+
+    // Try MQTT Direct publish first
+    if (this.mqttDirect && this.mqttDirect.isConnected && data.productKey && data.deviceName) {
+      try {
+        // Try JSON envelope first
+        await this.mqttDirect.sendCommand(data.productKey, data.deviceName, cmd);
+        // Also try raw protobuf
+        await this.mqttDirect.sendRawCommand(data.productKey, data.deviceName, cmd);
+        return;
+      } catch (err) {
+        this.log('MQTT Direct command failed:', err.message, '- trying HTTP...');
+      }
+    }
+
+    // Fallback to HTTP
     this.api._lastDeviceData = data;
+    await this.api.sendProtobufCommand(data.id, cmd);
+  }
+
+  async startMowing() {
     this.log('Starting mowing');
-    await this.api.startMowing(data.id);
+    await this._sendCommand(() => this.api._protobuf.startJob());
   }
 
   async stopMowing() {
-    const data = this.getData();
-    this.api._lastDeviceData = data;
     this.log('Stopping mowing');
-    await this.api.stopMowing(data.id);
+    await this._sendCommand(() => this.api._protobuf.cancelJob());
   }
 
   async pauseMowing() {
-    const data = this.getData();
-    this.api._lastDeviceData = data;
     this.log('Pausing mowing');
-    await this.api.pauseMowing(data.id);
+    await this._sendCommand(() => this.api._protobuf.pauseTask());
   }
 
   async returnToDock() {
-    const data = this.getData();
-    this.api._lastDeviceData = data;
     this.log('Returning to dock');
-    await this.api.returnToDock(data.id);
+    await this._sendCommand(() => this.api._protobuf.returnToDock());
   }
 
   // ── Lifecycle ───────────────────────────────────────────
